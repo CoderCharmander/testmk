@@ -1,0 +1,50 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    max-width: 650px;
+    margin: 48px auto;
+}
+
+h1,
+h2,
+h3 {
+    font-weight: bold;
+}
+
+h1 {
+    font-size: 32px;
+    margin-bottom: 32px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+h3 {
+    font-size: 16px;
+}
+
+.exercise {
+    margin-left: 1em;
+}
+
+input {
+    font: inherit;
+    display: block;
+    width: 100%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: solid 1px black;
+    margin: 0px;
+    padding: 0px;
+}
+
+input.inline {
+    display: inline;
+    width: auto;
+}
+
+input:focus {
+    border-bottom: solid 2px black;
+}

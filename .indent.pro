@@ -1,0 +1,14 @@
+-psl
+-bli0
+-br
+-blf
+-ut
+-ts4
+-l79
+-as
+-cli0
+-ce
+-i4
+-nprs
+-lp
+-npcs
