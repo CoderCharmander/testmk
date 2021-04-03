@@ -42,6 +42,7 @@ convert()
 	char uniq_radio_id[17] = { 0 };
 	int c;
 	generate_uniq_id(radio_id);
+	fputs("<p>\n\t", output);
 	while ((c = fgetc(stdin)) != EOF) {
 		if (newline && c != '<') {
 			if (radio_streak) {
@@ -51,9 +52,6 @@ convert()
 			radio_streak = 0;
 		}
 		switch (c) {
-		case '\n':
-			fputs("<br>", output);
-			break;
 		case '[':
 			if (fillin_mode)
 				die("parse error: unexpected '[' in fillin mode");
@@ -77,12 +75,12 @@ convert()
 				radio_streak = 1;
 				generate_uniq_id(uniq_radio_id);
 				fprintf(output,
-				        "<input type=\"radio\" name=\"%s\" id=\"%s\" value=\"%s\"><label for=\"%s\">",
+				        "\n<input type=\"radio\" name=\"%s\" id=\"%s\" value=\"%s\"><label for=\"%s\">",
 				        radio_id, uniq_radio_id, uniq_radio_id, uniq_radio_id);
 				while ((c = fgetc(stdin)) != EOF && c != '\n') {
 					fputc(c, output);
 				}
-				fputs("</label><br>\n", output);
+				fputs("</label>\n", output);
 				break;
 			}
 			/* else FALLTHROUGH */
@@ -101,20 +99,29 @@ convert()
 		}
 		if (fillin_mode)
 			++fillin_len;
-		if (newline)
+		if (newline) {
 			newline = 0;
+			if (c == '\n' && !radio_streak) {
+				fputs("\n</p>\n<p>\n\t", output);
+			}
+		}
 		if (c == '\n')
 			newline = 1;
 	}
+	fputs("\n</p>", output);
 }
 
 int
 main(int argc, char **argv)
 {
 	program = argv[0];
+	if (argc > 1) {
+		output = fopen(argv[1], "r");
+		if (!output) {
+			perror(
 	output = stdout;
 	printf("%s", html_header_part1);
-	printf("%s", "English Test");
+	printf("%s", "testmk document");
 	printf("%s", html_header_part2);
 	convert();
 }
